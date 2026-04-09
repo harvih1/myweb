@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}LuxBags — Premium Bags & Accessories{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="{% url 'home' %}" class="nav-logo">
+        <span class="logo-icon">👜</span> LuxBags
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+        <a href="#shop" class="nav-link">Shop</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact Us</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="cart-btn" id="cartBtn" title="Shopping cart">
+          🛒 <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h2>Your Cart</h2>
+      <button class="close-cart" id="closeCart">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="cart-empty">Your cart is empty.</p>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none">
+      <div class="cart-summary">
+        <div class="cart-summary-row">
+          <span>Subtotal (<span id="cartItemCount">0</span> items)</span>
+          <span id="cartSubtotal">$0.00</span>
+        </div>
+        <div class="cart-summary-row">
+          <span>Shipping</span>
+          <span id="cartShipping">$0.00</span>
+        </div>
+        <div class="cart-summary-divider"></div>
+        <div class="cart-summary-row cart-total-row">
+          <strong>Total</strong>
+          <strong id="cartTotal">$0.00</strong>
+        </div>
+        <p class="cart-shipping-note" id="cartShippingNote"></p>
+      </div>
+      <button class="btn btn-primary checkout-btn">Checkout</button>
+    </div>
+  </aside>
+
+  <!-- PAGE CONTENT -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span class="logo-icon">👜</span>
+        <strong>LuxBags</strong>
+        <p>Quality bags for every occasion.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="#shop">Shop</a>
+        <a href="{% url 'contact' %}">Contact Us</a>
+      </div>
+      <div class="footer-social">
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="#" title="Instagram">📸 Instagram</a>
+          <a href="#" title="Facebook">👍 Facebook</a>
+          <a href="#" title="Pinterest">📌 Pinterest</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 LuxBags. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/main.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

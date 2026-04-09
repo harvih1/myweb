@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}LuxBags — Premium Bags & Accessories{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <p class="hero-subtitle">New Collection 2026</p>
+    <h1 class="hero-title">Carry Your<br /><span class="highlight">Style</span></h1>
+    <p class="hero-desc">Discover our handcrafted collection of premium bags — from elegant totes to stylish backpacks.</p>
+    <div class="hero-buttons">
+      <a href="#shop" class="btn btn-primary">Shop Now</a>
+      <a href="{% url 'contact' %}" class="btn btn-outline">Contact Us</a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=700&q=85" alt="Featured bag" />
+    <div class="hero-badge">
+      <span class="badge-number">8+</span>
+      <span class="badge-text">Styles</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<section class="stats-bar">
+  <div class="stat"><strong>500+</strong><span>Happy Customers</span></div>
+  <div class="stat"><strong>8</strong><span>Bag Styles</span></div>
+  <div class="stat"><strong>100%</strong><span>Genuine Leather</span></div>
+  <div class="stat"><strong>Free</strong><span>Shipping over $80</span></div>
+</section>
+
+<!-- SHOP -->
+<section class="shop" id="shop">
+  <div class="section-header">
+    <h2>Our Collection</h2>
+    <p>Filter by category to find your perfect bag</p>
+  </div>
+
+  <!-- FILTER TABS -->
+  <div class="filter-tabs">
+    <button class="filter-btn active" data-filter="all">All</button>
+    {% for cat in categories %}
+    <button class="filter-btn" data-filter="{{ cat }}">{{ cat }}</button>
+    {% endfor %}
+  </div>
+
+  <!-- PRODUCT GRID -->
+  <div class="product-grid" id="productGrid">
+    {% for bag in bags %}
+    <div class="product-card" data-category="{{ bag.category }}" data-id="{{ bag.id }}" data-name="{{ bag.name }}" data-price="{{ bag.price }}">
+      <div class="product-image-wrap">
+        <img src="{{ bag.image }}" alt="{{ bag.name }}" loading="lazy" />
+        {% if bag.badge %}
+        <span class="product-badge badge-{{ bag.badge|lower }}">{{ bag.badge }}</span>
+        {% endif %}
+        <button class="quick-add" data-id="{{ bag.id }}" data-name="{{ bag.name }}" data-price="{{ bag.price }}">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <span class="product-category">{{ bag.category }}</span>
+        <h3 class="product-name">{{ bag.name }}</h3>
+        <p class="product-desc">{{ bag.description }}</p>
+        <div class="product-footer">
+          <span class="product-price">${{ bag.price }}</span>
+          <button class="btn btn-sm add-to-cart" data-id="{{ bag.id }}" data-name="{{ bag.name }}" data-price="{{ bag.price }}">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ABOUT / BANNER -->
+<section class="about-banner" id="about">
+  <div class="about-text">
+    <h2>Why Choose LuxBags?</h2>
+    <ul class="about-list">
+      <li>✔ Genuine full-grain leather sourced ethically</li>
+      <li>✔ Handcrafted by skilled artisans</li>
+      <li>✔ 2-year quality guarantee on all products</li>
+      <li>✔ Free returns within 30 days</li>
+      <li>✔ Free shipping on orders over $80</li>
+    </ul>
+    <a href="{% url 'contact' %}" class="btn btn-primary">Get in Touch</a>
+  </div>
+  <div class="about-img">
+    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&q=80" alt="LuxBags craftsmanship" />
+  </div>
+</section>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Pass Django bag data to JS for cart
+  const BAGS_DATA = {{ bags_json|safe }};
+</script>
+{% endblock %}
